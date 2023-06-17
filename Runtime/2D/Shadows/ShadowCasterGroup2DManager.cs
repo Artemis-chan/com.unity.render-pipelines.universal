@@ -47,10 +47,15 @@ namespace UnityEngine.Rendering.Universal
         public static void AddShadowCasterGroupToList(ShadowCasterGroup2D shadowCaster, List<ShadowCasterGroup2D> list)
         {
             int positionToInsert = 0;
-            for (int positionToInsert = 0; positionToInsert < list.Count; positionToInsert++)
+            bool foundPosition = false;
+            for (int i = 0; i < list.Count; i++)
             {
-                if (shadowCaster.GetShadowGroup() == list[positionToInsert].GetShadowGroup())
-                    break;
+                if (shadowCaster == list[i]) return;
+                if (!foundPosition && shadowCaster.GetShadowGroup() == list[i].GetShadowGroup())
+                {
+                    positionToInsert = i;
+                    foundPosition = true;
+                }
             }
 
             list.Insert(positionToInsert, shadowCaster);
